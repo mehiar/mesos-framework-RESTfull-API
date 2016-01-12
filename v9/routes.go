@@ -19,10 +19,10 @@ var routes = Routes{
 		Index,
 	},
 	Route{
-		"TodoIndex",
+		"RequestsIndex",
 		"GET",
 		"/container-requests",
-		TodoIndex,
+		RequestsIndex,
 	},
 	Route{
 		"RequestCreate",

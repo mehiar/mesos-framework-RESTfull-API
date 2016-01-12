@@ -4,16 +4,10 @@ import "fmt"
 
 var currentId int
 
-var todos ContainerRequests
-
-// Give us some seed data
-func init() {
-	RepoCreateRequest(ContainerRequest{Name: "Write presentation"})
-	RepoCreateRequest(ContainerRequest{Name: "Host meetup"})
-}
+var containers ContainerRequests
 
 func RepoFindRequest(id int) ContainerRequest {
-	for _, t := range todos {
+	for _, t := range containers {
 		if t.Id == id {
 			return t
 		}
@@ -23,17 +17,17 @@ func RepoFindRequest(id int) ContainerRequest {
 }
 
 //this is bad, I don't think it passes race condtions
-func RepoCreateRequest(t ContainerRequest) ContainerRequest {
+func RepoCreateRequest(c ContainerRequest) ContainerRequest {
 	currentId += 1
-	t.Id = currentId
-	todos = append(todos, t)
-	return t
+	c.Id = currentId
+	containers = append(containers, c)
+	return c
 }
 
-func RepoDestroyRequest(id int) error {
-	for i, t := range todos {
-		if t.Id == id {
-			todos = append(todos[:i], todos[i+1:]...)
+func RepoRemoveRequest(id int) error {
+	for i, c := range containers {
+		if c.Id == id {
+			containers = append(containers[:i], containers[i+1:]...)
 			return nil
 		}
 	}
