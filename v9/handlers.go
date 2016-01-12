@@ -23,14 +23,14 @@ func TodoIndex(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func TodoShow(w http.ResponseWriter, r *http.Request) {
+func RequestShow(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	var todoId int
 	var err error
 	if todoId, err = strconv.Atoi(vars["todoId"]); err != nil {
 		panic(err)
 	}
-	todo := RepoFindTodo(todoId)
+	todo := RepoFindRequest(todoId)
 	if todo.Id > 0 {
 		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 		w.WriteHeader(http.StatusOK)
@@ -55,8 +55,8 @@ Test with this curl command:
 curl -H "Content-Type: application/json" -d '{"name":"New Todo"}' http://localhost:8080/todos
 
 */
-func TodoCreate(w http.ResponseWriter, r *http.Request) {
-	var todo Todo
+func RequestCreate(w http.ResponseWriter, r *http.Request) {
+	var todo ContainerRequest
 	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
 	if err != nil {
 		panic(err)
@@ -72,7 +72,7 @@ func TodoCreate(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	t := RepoCreateTodo(todo)
+	t := RepoCreateRequest(todo)
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusCreated)
 	if err := json.NewEncoder(w).Encode(t); err != nil {

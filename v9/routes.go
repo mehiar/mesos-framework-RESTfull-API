@@ -21,19 +21,19 @@ var routes = Routes{
 	Route{
 		"TodoIndex",
 		"GET",
-		"/todos",
+		"/container-requests",
 		TodoIndex,
 	},
 	Route{
-		"TodoCreate",
+		"RequestCreate",
 		"POST",
-		"/todos",
-		TodoCreate,
+		"/container-requests",
+		RequestCreate,
 	},
 	Route{
-		"TodoShow",
+		"RequestShow",
 		"GET",
-		"/todos/{todoId}",
-		TodoShow,
+		"/container-requests/{todoId}",
+		RequestShow,
 	},
 }

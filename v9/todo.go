@@ -2,7 +2,7 @@ package main
 
 import "time"
 
-type Todo struct {
+type ContainerRequest struct {
 	Id        int       `json:"id"`
 	Name      string    `json:"name"`
 	Completed bool      `json:"completed"`
@@ -14,4 +14,4 @@ type Todo struct {
 	Status    string    `json:"status"`
 }
 
-type Todos []Todo
+type ContainerRequests []ContainerRequest
