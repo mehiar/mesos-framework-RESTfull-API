@@ -33,7 +33,7 @@ var routes = Routes{
 	Route{
 		"RequestShow",
 		"GET",
-		"/container-requests/{todoId}",
+		"/container-requests/{containerId}",
 		RequestShow,
 	},
 }

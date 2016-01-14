@@ -25,16 +25,16 @@ func RequestsIndex(w http.ResponseWriter, r *http.Request) {
 
 func RequestShow(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	var todoId int
+	var containerId int
 	var err error
-	if todoId, err = strconv.Atoi(vars["todoId"]); err != nil {
+	if containerId, err = strconv.Atoi(vars["containerId"]); err != nil {
 		panic(err)
 	}
-	todo := RepoFindRequest(todoId)
-	if todo.Id > 0 {
+	container := RepoFindRequest(containerId)
+	if container.Id > 0 {
 		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 		w.WriteHeader(http.StatusOK)
-		if err := json.NewEncoder(w).Encode(todo); err != nil {
+		if err := json.NewEncoder(w).Encode(container); err != nil {
 			panic(err)
 		}
 		return
@@ -56,7 +56,7 @@ curl -H "Content-Type: application/json" -d '{"name":"New ContainerRequest"}' ht
 
 */
 func RequestCreate(w http.ResponseWriter, r *http.Request) {
-	var todo ContainerRequest
+	var container ContainerRequest
 	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
 	if err != nil {
 		panic(err)
@@ -64,7 +64,7 @@ func RequestCreate(w http.ResponseWriter, r *http.Request) {
 	if err := r.Body.Close(); err != nil {
 		panic(err)
 	}
-	if err := json.Unmarshal(body, &todo); err != nil {
+	if err := json.Unmarshal(body, &container); err != nil {
 		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 		w.WriteHeader(422) // unprocessable entity
 		if err := json.NewEncoder(w).Encode(err); err != nil {
@@ -72,10 +72,10 @@ func RequestCreate(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	t := RepoCreateRequest(todo)
+	c := RepoCreateRequest(container)
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusCreated)
-	if err := json.NewEncoder(w).Encode(t); err != nil {
+	if err := json.NewEncoder(w).Encode(c); err != nil {
 		panic(err)
 	}
 }
